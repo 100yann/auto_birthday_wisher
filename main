@@ -1,0 +1,38 @@
+# # Code before tutorial (works)
+
+import pandas as pd
+import datetime as dt
+import random
+import smtplib
+
+
+now = dt.datetime.now()
+year = now.year
+month = now.month
+day = now.day
+
+df = pd.read_csv("birthdays.csv")
+
+for index, row in df.iterrows():
+    if row["year"] == year and row["month"] == month and row["day"] == day:
+        birthday_boy = row["name"]
+        email_to = row["email"]
+
+try:
+    with open(f"letter_templates/letter_{random.randint(1,3)}.txt") as letter:
+        body = letter.read()
+        new_letter = body.replace("[NAME]", birthday_boy)
+
+except NameError:
+    print("No birthdays today.")
+
+else:
+    EMAIL_FROM = "stoyan.py@gmail.com"
+    PASSWORD = "some password"
+    connection = smtplib.SMTP("smtp.gmail.com", 587)
+    connection.starttls()
+    connection.login(user=EMAIL_FROM, password=PASSWORD)
+    connection.sendmail(from_addr=EMAIL_FROM,
+                        to_addrs=email_to,
+                        msg=f"Subject: Happy Birthday!\n\n{new_letter}")
+    connection.close()
