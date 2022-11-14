@@ -12,7 +12,7 @@ if day_of_week == 0:
         quote = random.choice(all_quotes)
 
     EMAIL_FROM = "stoyan.py@gmail.com"
-    PASSWORD = "kdtgapzvfcmuabvi"
+    PASSWORD = "**********"
 
     EMAIL_TO = "stoyan.py@yahoo.com"
 
